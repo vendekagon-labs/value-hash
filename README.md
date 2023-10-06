@@ -1,8 +1,4 @@
-# Valuehash
-
-
-[![CircleCI](https://circleci.com/gh/arachne-framework/valuehash.svg?style=svg)](https://circleci.com/gh/arachne-framework/valuehash)
-
+# value-hash
 
 A Clojure library that provides a way to provide higher-bit hashes of arbitrary
 Clojure data structures, which respect Clojure's value semantics. That is, if
@@ -114,7 +110,9 @@ alternative impl in a separate namespace, with comparative benchmarks attached.
 
 ## License
 
-Copyright © 2016 Luke VanderHart
+Current library version and work done since © 2023 Vendekagon Labs
+
+Original library copyright © 2016 Luke VanderHart under EPL 1.0 terms.
 
 Distributed under the Eclipse Public License either version 1.0 or (at
 your option) any later version.
