@@ -31,7 +31,7 @@
             hps (/ (count data) (first (:mean results)))]
         (c/report-result results)
         (println "Fix reflection warning with: "(type hps))
-        (println "\nThis translates to about" (Math/round hps) "hashed objects per second")))))
+        (println "\nThis translates to about" (Math/round ^Double hps) "hashed objects per second")))))
 
 (defn bench-small-vectors
   []
