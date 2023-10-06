@@ -1,8 +1,20 @@
 # value-hash
 
-This is the Vendekagon Labs fork of [valuehash]()
+This is the Vendekagon Labs fork of
+[valuehash](https://github.com/arachne-framework/valuehash)
 a library by [Luke Vanderhart](https://github.com/arachne-framework/valuehash)
-written as part of the [Arachne framework](https://github.com/arachne-framework).
+written as part of the
+[Arachne framework](https://github.com/arachne-framework).
+
+## Dependency Information
+
+Use `deps.edn` git coords for depending on this fork.
+
+```clojure
+{com.vendekagonlabs/value-hash
+ {:git/url "https://github.com/vendekagon-labs/value-hash.git"
+  :sha "2c4cca299439c4b8239247bb36e105ddb6d801a8"}}
+```
 
 ## Rationale
 
