@@ -1,5 +1,5 @@
 (ns com.vendekagonlabs.value-hash.api
-  (:require [com.vendekagonlabs.value-hash.api :as impl]
+  (:require [com.vendekagonlabs.value-hash.impl :as impl]
             [com.vendekagonlabs.value-hash.specs])
   (:import [java.security MessageDigest]
            [java.io InputStream ByteArrayInputStream]))
