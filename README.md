@@ -1,15 +1,23 @@
 # value-hash
 
-A Clojure library that provides a way to provide higher-bit hashes of arbitrary
-Clojure data structures, which respect Clojure's value semantics. That is, if
-two objects are `clojure.core/=`, they will have the same hash value. To my
-knowledge, no other Clojure data hashing libraries make this guarantee.
+This is the Vendekagon Labs fork of [valuehash]()
+a library by [Luke Vanderhart](https://github.com/arachne-framework/valuehash)
+written as part of the [Arachne framework](https://github.com/arachne-framework).
+
+## Ratoionale
+
+`value-hasi` is a A Clojure library that provides a way to provide higher-bit
+hashes of arbitrary Clojure data structures, which respect Clojure's value
+semantics. That is, if two objects are `clojure.core/=`, they will have the same
+hash value. To my knowledge, no other Clojure data hashing libraries make this
+guarantee.
 
 The protocol is extensible to arbitrary data types and can work with any hash
 function.
 
 Although the library uses byte streams as an intermediate format, it does not
-tag types, or perform any optimization or compaction of the byte stream. Therefore it should _not_ be used as a serialization library. Use
+tag types, or perform any optimization or compaction of the byte stream.
+Therefore it should _not_ be used as a serialization library. Use
 [Fressian](https://github.com/clojure/data.fressian),
 [Transit](https://github.com/cognitect/transit-clj) or something similar
 instead.
@@ -42,7 +50,8 @@ your JVM.
 Obtain the digest function using the `messagedigest-fn` function, then pass it
 and the object to be hashed to `digest`.
 
-If you wish to obtain a hexadecimal string of the result, call the `hex-str` function on the result.
+If you wish to obtain a hexadecimal string of the result, call the `hex-str`
+function on the result.
 
 ```clojure
 (h/hex-str (h/digest (h/messagedigest-fn "MD2") {:hello "World"}))
@@ -55,7 +64,8 @@ If nothing in `java.security.MessageDigest` meets your needs, you can supply
 your own digest function to `valuehash.api/digest`. This may be any function
 which takes a `java.io.InputStream` and returns a byte array.
 
-For example, the following example defines and uses a valid but terrible hash function:
+For example, the following example defines and uses a valid but terrible hash
+function:
 
 ```clojure
 (defn lazyhash [is]
@@ -64,11 +74,16 @@ For example, the following example defines and uses a valid but terrible hash fu
 
 (h/digest lazyhash {:hello "world"})
 ```
+
 ## Semantics
 
-This does not combine hashes: it converts the entire input data to binary data,
-and hashes that. As such, it is suitable for cryptographic applications when
-used with an appropriate hash function.
+This library does not combine hashes: it converts the entire input data to
+binary data, and hashes that. As such, it is likely suitable for cryptographic
+applications when used with an appropriate hash function.
+
+_NOTE_: No explicit warranty or guarantee about this is provided, so if you want
+to use the library for this purpose, I recommend you make an independent audit
+of its behavior w/r/t cryptogrpahic guarantees.
 
 The binary data supplied to the hash function matches Clojure's equality
 semantics. That is, objects that are semantically `clojure.core/=` will have the
@@ -82,37 +97,46 @@ This means:
 - All integer numbers are encoded the same
 - All floating-point numbers are encoded the same
 
-The system does take some steps to rule out common types of "collisions", where two unequal objects have the same binary representation (and therefore the same hash). It injects "separator" bytes in collections, so that (for example) the binary representation of `["ab" "c"]` is not equal to `["a" "bc"]`.
+The system does take some steps to rule out common types of "collisions", where
+two unequal objects have the same binary representation (and therefore the same
+hash). It injects "separator" bytes in collections, so that (for example) the
+binary representation of `["ab" "c"]` is not equal to `["a" "bc"]`.
 
 ## Supported Types
 
-By default, Clojure's native types are supported: as a rule of thumb, if it can be printed to EDN by the default printer, it can be hashed with no fuss.
+By default, Clojure's native types are supported: as a rule of thumb, if it can
+be printed to EDN by the default printer, it can be hashed with no fuss.
 
-If you want to extend the system to hash arbitrary values, you can extend the `valuehash.impl/CanonicalByteArray` protocol to any object of your choosing.
+If you want to extend the system to hash arbitrary values, you can extend the
+`valuehash.impl/CanonicalByteArray` protocol to any object of your choosing.
 
 ## Performance
 
-On my Macbook Pro, this library can determine the MD5 hash of small (0-10
-element vectors) at a rate of about 22,000 hashed objects per second.
+On a 2020 M1 Macbook Air, this library determines the MD5 hash of small
+(0 - 10 element vectors) at a rate of > 40,000 hashed objects per second.
 
 Larger, more complex nested object slow down significantly, to a rate of around
-2,600 per second for objects generated by
+3,500 per second for objects generated by
 `(clojure.test.check.generators/sample-seq gen/any-printable 100)`
 
 To run your own benchmarks, check out the `valuehash.bench` namespace in the
 `test` directory.
 
-The current implementation is known to be somewhat naive, as it is single
-threaded and performs lots of redundant array copying. If you have ideas for
-how to make this faster, please see the `valuehash.impl` namespace and
-re-implement/replace `CanonicalByteArray`, then submit a pull request with your
-alternative impl in a separate namespace, with comparative benchmarks attached.
+## Contributing
+
+The current implementation is somewhat naive, as it is single
+threaded and performs redundant array copying. Performance oriented PRs are
+welcome. Please see the `valuehash.impl` namespace and re-implement/replace
+`CanonicalByteArray` with more performant type specific methods, then submit
+a pull request with your alternative impl in a separate namespace, with
+comparative benchmarks attached.
 
 ## License
 
-Current library version and work done since © 2023 Vendekagon Labs
+Original library copyright © 2016-2018 Luke VanderHart under EPL 1.0 terms.
 
-Original library copyright © 2016 Luke VanderHart under EPL 1.0 terms.
+Current library version and work done since copyright © 2023 Vendekagon Labs.
 
 Distributed under the Eclipse Public License either version 1.0 or (at
 your option) any later version.
+
