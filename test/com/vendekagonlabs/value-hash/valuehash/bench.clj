@@ -1,5 +1,5 @@
-(ns valuehash.bench
-  (:require [valuehash.api :as api]
+(ns com.vendekagonlabs.value-hash.bench
+  (:require [com.vendekagonlabs.value-hash.api :as api]
             [criterium.core :as c]
             [clojure.test.check.generators :as gen]
             [clojure.test.check.random :as random]
@@ -37,9 +37,9 @@
 (defn bench-small-maps
   []
   (do-bench api/md5 (take 1000 (sample-seq (gen/map
-                                          gen/simple-type-printable
-                                          gen/simple-type-printable)
-                              42 10))))
+                                            gen/simple-type-printable
+                                            gen/simple-type-printable)
+                                42 10))))
 
 (defn bench-complex
   []
@@ -52,6 +52,6 @@
 
   (bench-small-maps)
 
-  (bench-complex)
+  (bench-complex))
 
-  )
+  

@@ -1,4 +1,4 @@
-(ns valuehash.impl
+(ns com.vendekagonlabs.value-hash.impl
   "Simple implementation based on plain byte arrays"
   (:import [java.util UUID Date]
            [java.math BigInteger BigDecimal]))

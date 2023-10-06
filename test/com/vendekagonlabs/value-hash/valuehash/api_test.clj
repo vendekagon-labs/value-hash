@@ -1,9 +1,9 @@
-(ns valuehash.api-test
+(ns com.vendekagonlabs.value-hash.api-test
   (:require [clojure.test.check.generators :as gen]
             [clojure.test.check.properties :as prop]
             [clojure.test.check.clojure-test :refer [defspec]]
-            [valuehash.api :as api]
-            ))
+            [com.vendekagonlabs.value-hash.api :as api]))
+            
 
 (defprotocol Perturbable
   "A value that can be converted to a value of a different type, but stil be equal"

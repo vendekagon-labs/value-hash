@@ -1,4 +1,4 @@
-(ns valuehash.specs
+(ns com.vendekagonlabs.value-hash.specs
   (:require [clojure.spec.alpha :as s]))
 
 (def byte-array-class (class (byte-array 0)))

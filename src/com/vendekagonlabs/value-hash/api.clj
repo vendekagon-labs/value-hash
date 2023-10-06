@@ -1,6 +1,6 @@
-(ns valuehash.api
-  (:require [valuehash.impl :as impl]
-            [valuehash.specs])
+(ns com.vendekagonlabs.value-hash.api
+  (:require [com.vendekagonlabs.value-hash.api :as impl]
+            [com.vendekagonlabs.value-hash.specs])
   (:import [java.security MessageDigest]
            [java.io InputStream ByteArrayInputStream]))
 
